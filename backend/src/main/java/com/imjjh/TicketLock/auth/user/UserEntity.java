@@ -1,7 +1,8 @@
-package com.imjjh.TicketLock.user;
+package com.imjjh.TicketLock.auth.user;
 
 import com.imjjh.TicketLock.common.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -52,7 +53,7 @@ public class UserEntity extends BaseTimeEntity {
      * 권한 추가 메서드
      * @param roleType
      */
-    public void AddRole(RoleType roleType){
+    public void addRole(RoleType roleType){
         UserRole userRole = UserRole.builder()
                 .user(this)
                 .role(roleType)
@@ -61,4 +62,13 @@ public class UserEntity extends BaseTimeEntity {
         this.roles.add(userRole);
     }
 
+
+    @Builder
+    public UserEntity(String provider, String providerId, String nickName, String username, String email) {
+        this.provider = provider;
+        this.providerId = providerId;
+        this.nickName = nickName;
+        this.username = username;
+        this.email = email;
+    }
 }

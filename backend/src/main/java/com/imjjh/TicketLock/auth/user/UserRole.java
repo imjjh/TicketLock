@@ -1,4 +1,4 @@
-package com.imjjh.TicketLock.user;
+package com.imjjh.TicketLock.auth.user;
 
 import jakarta.persistence.*;
 import lombok.Builder;
