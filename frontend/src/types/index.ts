@@ -73,3 +73,15 @@ export interface Product {
 export interface CartItem extends Product {
     quantity: number;
 }
+
+export interface Coupon {
+    id: number;
+    code: string;
+    name: string;
+    discountAmount: number;
+    discountType: 'PERCENT' | 'FIXED';
+    validUntil: string;
+    description: string;
+    totalQuantity: number;
+    remainingQuantity: number;
+}

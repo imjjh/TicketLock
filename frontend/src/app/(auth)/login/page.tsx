@@ -26,13 +26,13 @@ export default function LoginPage() {
             <div className="relative z-10 w-full max-w-md p-8 bg-secondary/50 border border-border rounded-2xl shadow-2xl backdrop-blur-md">
                 <div className="text-center mb-8">
                     <Link href="/" className="inline-block">
-                        <h1 className="text-4xl font-bold tracking-tighter text-primary mb-2">
-                            TICKET<span className="text-foreground">LOCK</span>
-                        </h1>
+                        <div className="flex flex-col space-y-2 text-center">
+                            <h1 className="text-3xl font-black tracking-tight text-primary">DIBS! Login</h1>
+                            <p className="text-sm text-muted-foreground">
+                                선착순 타임딜 쇼핑몰 딥스에 오신 것을 환영합니다
+                            </p>
+                        </div>
                     </Link>
-                    <p className="text-muted-foreground">
-                        프리미엄 영화 예매의 시작
-                    </p>
                 </div>
 
                 {/* Basic Login Form */}
@@ -55,7 +55,7 @@ export default function LoginPage() {
                             />
                         </div>
                     </div>
-                    <button className="w-full py-3 bg-primary text-white font-bold rounded-lg hover:bg-red-700 transition-colors">
+                    <button className="w-full py-3 bg-primary text-primary-foreground font-bold rounded-lg hover:bg-primary/90 transition-colors">
                         로그인
                     </button>
                 </form>

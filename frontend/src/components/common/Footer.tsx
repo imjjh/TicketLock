@@ -6,18 +6,18 @@ export function Footer() {
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div className="space-y-4">
-                        <h3 className="text-xl font-bold text-primary">TICKETLOCK</h3>
+                        <h3 className="text-xl font-black text-primary tracking-tighter">DIBS<span className="text-foreground">!</span></h3>
                         <p className="text-sm text-muted-foreground">
-                            최고의 영화 경험을 제공하는 프리미엄 예매 플랫폼.
+                            놓치면 품절! 선착순 타임딜 쇼핑몰 딥스.
                         </p>
                     </div>
 
                     <div>
-                        <h4 className="font-semibold mb-4">서비스</h4>
+                        <h4 className="font-semibold mb-4">쇼핑하기</h4>
                         <ul className="space-y-2 text-sm text-muted-foreground">
-                            <li><Link href="/movie" className="hover:text-foreground">영화 예매</Link></li>
-                            <li><Link href="/store" className="hover:text-foreground">스토어</Link></li>
-                            <li><Link href="/theaters" className="hover:text-foreground">극장 찾기</Link></li>
+                            <li><Link href="/deal" className="hover:text-foreground">타임딜</Link></li>
+                            <li><Link href="/best" className="hover:text-foreground">베스트</Link></li>
+                            <li><Link href="/coupons" className="hover:text-foreground">쿠폰존</Link></li>
                         </ul>
                     </div>
 
@@ -42,7 +42,7 @@ export function Footer() {
                 </div>
 
                 <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-                    <p>&copy; {new Date().getFullYear()} TicketLock. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} DIBS Corp. All rights reserved.</p>
                 </div>
             </div>
         </footer>

@@ -1,116 +1,117 @@
-"use client"
+"use client";
 
-import { useEffect } from 'react';
-import Link from 'next/link';
-import { Play, Star } from 'lucide-react';
-import { useMovieStore } from '@/store/useMovieStore';
+import Image from "next/image";
+import Link from "next/link";
+import { Timer, ArrowRight, ShoppingBag, Tag } from "lucide-react";
 
 export default function Home() {
-    const { movies, fetchMovies, isLoading, error } = useMovieStore();
-
-    useEffect(() => {
-        fetchMovies();
-    }, [fetchMovies]);
-
-    // Featured movie (first one or specific logic)
-    const featuredMovie = movies && movies.length > 0 ? movies[0] : null;
-
     return (
-        <div className="space-y-16 pb-20">
-            {/* Hero Section */}
-            <section className="relative h-[70vh] w-full overflow-hidden">
-                {/* Background Image Placeholder */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10"></div>
-                <div
-                    className="absolute inset-0 bg-cover bg-center transition-all duration-700"
-                    style={{ backgroundImage: `url('${featuredMovie?.backdropUrl || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=2525&auto=format&fit=crop'}')` }}
-                ></div>
+        <div className="flex flex-col min-h-screen">
+            {/* Hero Section - Flash Deal */}
+            <section className="relative h-[600px] flex items-center justify-center overflow-hidden">
+                {/* Background - Dark & Premium */}
+                <div className="absolute inset-0 z-0">
+                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10" />
+                    <Image
+                        src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070&auto=format&fit=crop"
+                        alt="Shopping Hero"
+                        fill
+                        className="object-cover"
+                        priority
+                    />
+                </div>
 
-                <div className="relative z-20 container mx-auto h-full flex flex-col justify-end pb-20 px-4">
-                    <span className="inline-block px-3 py-1 mb-4 text-xs font-bold bg-primary text-white rounded-full w-fit">
-                        NOW PLAYING
-                    </span>
-                    <h1 className="text-5xl md:text-7xl font-bold mb-4 max-w-3xl leading-tight">
-                        {featuredMovie?.title || "영화를 불러오는 중..."} <br />
-                        <span className="text-primary">TICKETLOCK</span>
-                    </h1>
-                    <p className="text-lg text-gray-300 max-w-xl mb-8 line-clamp-2">
-                        {featuredMovie?.description || "프리미엄 영화 예매 서비스"}
-                    </p>
-                    <div className="flex gap-4">
-                        <Link
-                            href={featuredMovie ? `/booking/${featuredMovie.id}` : '#'}
-                            className="px-8 py-4 bg-primary text-white font-bold rounded-lg hover:bg-red-700 transition-colors flex items-center gap-2"
-                        >
-                            <Play className="w-5 h-5 fill-current" />
-                            예매하기
-                        </Link>
-                        <Link
-                            href={featuredMovie ? `/movie/${featuredMovie.id}` : '#'}
-                            className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-lg hover:bg-white/20 transition-colors"
-                        >
-                            상세정보
-                        </Link>
+                <div className="container relative z-20 px-4 md:px-6">
+                    <div className="max-w-2xl space-y-6">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/90 text-white text-sm font-bold animate-pulse">
+                            <Timer className="w-4 h-4" />
+                            <span>[MOCK] TIME DEAL ENDING SOON</span>
+                        </div>
+
+                        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-white">
+                            [MOCK] SAMSUNG <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+                                GALAXY S24
+                            </span>
+                        </h1>
+
+                        <p className="text-xl text-gray-300 max-w-[600px]">
+                            [MOCK] 선착순 100명 한정 50% 할인 쿠폰 배포 중. <br />
+                            지금 바로 쿠폰을 다운로드하고 최저가에 도전하세요.
+                        </p>
+
+                        <div className="flex gap-4 pt-4">
+                            <Link
+                                href="/deal"
+                                className="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition-all text-lg"
+                            >
+                                <Tag className="w-5 h-5" />
+                                [MOCK] 선착순 쿠폰받기
+                            </Link>
+                            <Link
+                                href="/best"
+                                className="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-full border border-white/30 bg-black/30 text-white backdrop-blur-sm hover:bg-black/50 transition-all text-lg"
+                            >
+                                상품 더보기
+                                <ArrowRight className="w-5 h-5" />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Movie List Section */}
-            <section className="container mx-auto px-4">
+            {/* Popular Categories / Items */}
+            <section className="py-20 bg-background container mx-auto px-4">
                 <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-3xl font-bold">현재 상영작</h2>
-                    <Link href="/movie" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                        전체보기 &rarr;
+                    <h2 className="text-3xl font-bold tracking-tight">🔥 [MOCK] 지금 뜨는 핫딜</h2>
+                    <Link
+                        href="/best"
+                        className="text-sm font-medium hover:text-primary flex items-center gap-1"
+                    >
+                        전체보기 <ArrowRight className="w-4 h-4" />
                     </Link>
                 </div>
 
-                {isLoading ? (
-                    <div className="text-center py-20">Loading...</div>
-                ) : error ? (
-                    <div className="text-center py-20 text-muted-foreground">
-                        <p>영화 정보를 불러올 수 없습니다.</p>
-                        <p className="text-sm mt-2">백엔드에 영화 API가 구현되면 표시됩니다.</p>
-                    </div>
-                ) : movies.length === 0 ? (
-                    <div className="text-center py-20 text-muted-foreground">
-                        <p>현재 상영중인 영화가 없습니다.</p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {movies.slice(0, 4).map((movie) => (
-                            <div key={movie.id} className="group relative">
-                                <div className="aspect-[2/3] rounded-lg overflow-hidden bg-secondary mb-4 relative">
-                                    <img
-                                        src={movie.posterUrl}
-                                        alt={movie.title}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    />
-                                    <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded flex items-center gap-1 text-xs font-bold text-accent">
-                                        <Star className="w-3 h-3 fill-current" />
-                                        {movie.rating}
-                                    </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    {[1, 2, 3, 4].map((item) => (
+                        <div
+                            key={item}
+                            className="group relative bg-secondary/20 rounded-xl overflow-hidden border border-border transition-all hover:border-primary/50 hover:shadow-lg"
+                        >
+                            <div className="aspect-[4/3] relative overflow-hidden bg-gray-900">
+                                <div className="absolute top-3 left-3 z-10 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                                    50% OFF
                                 </div>
-                                <h3 className="text-lg font-bold mb-1 group-hover:text-primary transition-colors">{movie.title}</h3>
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                    <span className="border border-muted px-1 rounded text-[10px]">15세</span>
-                                    <span>{movie.duration}분</span>
-                                    <span>•</span>
-                                    <span>{movie.genre}</span>
-                                </div>
-                                <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity absolute inset-0 flex items-center justify-center bg-black/60 rounded-lg">
-                                    <Link
-                                        href={`/booking/${movie.id}`}
-                                        className="px-6 py-2 bg-primary text-white font-bold rounded-full hover:scale-105 transition-transform"
-                                    >
-                                        예매하기
-                                    </Link>
+                                {/* Placeholder for Product Image */}
+                                <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
+                                    <ShoppingBag className="w-12 h-12 opacity-50" />
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                )}
+                            <div className="p-4">
+                                <h3 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors">
+                                    [MOCK] Headphones {item}
+                                </h3>
+                                <p className="text-sm text-muted-foreground mb-3">
+                                    Wireless noise cancelling
+                                </p>
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <span className="text-lg font-bold">
+                                            {(299000).toLocaleString()}₩
+                                        </span>
+                                        <span className="text-sm text-muted-foreground line-through ml-2">
+                                            350,000
+                                        </span>
+                                    </div>
+                                    <button className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+                                        <ShoppingBag className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </section>
         </div>
     );
 }
-

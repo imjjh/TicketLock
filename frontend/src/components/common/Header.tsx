@@ -1,22 +1,31 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, ShoppingBag, User, Menu, LogOut } from 'lucide-react';
 import { useAuthStore } from '@/store/useAuthStore';
+import { useTheme } from "next-themes";
+import { Sun, Moon, ShoppingCart } from "lucide-react";
 
 export function Header() {
     const router = useRouter();
     const { isAuthenticated, user, logout, checkAuth } = useAuthStore();
+    const { theme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         checkAuth();
-    }, []); // 빈 배열: 컴포넌트 마운트 시 한 번만 실행
+        setMounted(true);
+    }, [checkAuth]); // 빈 배열: 컴포넌트 마운트 시 한 번만 실행
 
     const handleLogout = async () => {
         await logout();
         router.push('/');
+    };
+
+    const toggleTheme = () => {
+        setTheme(theme === "dark" ? "light" : "dark");
     };
 
     return (
@@ -24,18 +33,22 @@ export function Header() {
             <div className="container mx-auto flex h-16 items-center justify-between px-4">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
-                    <span className="text-2xl font-bold tracking-tighter text-primary">
-                        TICKET<span className="text-foreground">LOCK</span>
+                    <span className="text-2xl font-black tracking-tighter text-primary">
+                        DIBS<span className="text-foreground">!</span>
+                        <span className="text-xs ml-1 text-muted-foreground font-normal border px-1 rounded">SHOP</span>
                     </span>
                 </Link>
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-                    <Link href="/movie" className="transition-colors hover:text-primary">
-                        영화
+                    <Link href="/deal" className="transition-colors hover:text-primary font-bold text-primary">
+                        타임딜
                     </Link>
-                    <Link href="/store" className="transition-colors hover:text-primary">
-                        스토어
+                    <Link href="/best" className="transition-colors hover:text-primary">
+                        베스트
+                    </Link>
+                    <Link href="/coupons" className="transition-colors hover:text-primary">
+                        쿠폰존
                     </Link>
                     <Link href="/event" className="transition-colors hover:text-primary">
                         이벤트
@@ -44,6 +57,15 @@ export function Header() {
 
                 {/* Actions */}
                 <div className="flex items-center gap-4">
+                    {mounted && (
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2 rounded-full hover:bg-secondary transition-colors"
+                            aria-label="Toggle Theme"
+                        >
+                            {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                        </button>
+                    )}
                     <button className="p-2 hover:bg-secondary rounded-full transition-colors" aria-label="Search">
                         <Search className="w-5 h-5" />
                     </button>
@@ -68,7 +90,7 @@ export function Header() {
                             </button>
                         </div>
                     ) : (
-                        <Link href="/login" className="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors">
+                        <Link href="/login" className="px-4 py-2 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors">
                             로그인
                         </Link>
                     )}
