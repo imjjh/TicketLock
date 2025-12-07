@@ -1,8 +1,31 @@
+export interface ApiResponse<T> {
+    message: string;
+    data: T;
+}
+
 export interface User {
     id: number;
     email: string;
     name: string;
-    profileImage?: string;
+    roles: string[];
+}
+
+export interface LoginCredentials {
+    email: string;
+    password: string;
+}
+
+export interface SignupCredentials {
+    email: string;
+    password: string;
+    name: string;
+    role?: 'CUSTOMER' | 'ADMIN';
+}
+
+export interface AuthResponse {
+    accessToken: string;
+    refreshToken: string;
+    user: User;
 }
 
 export interface Movie {
@@ -10,21 +33,32 @@ export interface Movie {
     title: string;
     posterUrl: string;
     backdropUrl?: string;
-    releaseDate: string;
-    durationMin: number;
-    genre: string[];
     rating: number;
+    genre: string;
+    duration: number;
     description: string;
-    status: 'NOW_PLAYING' | 'COMING_SOON';
+    director?: string;
+    cast?: string[];
+    releaseDate: string;
 }
 
 export interface Seat {
-    id: string; // e.g., "A1", "B2"
+    id: string;
     row: string;
     col: number;
-    status: 'AVAILABLE' | 'RESERVED' | 'SELECTED' | 'LOCKED';
+    status: 'available' | 'reserved' | 'selected' | 'locked';
     price: number;
-    type: 'STANDARD' | 'PREMIUM' | 'COUPLE';
+}
+
+export interface Booking {
+    id: string;
+    movie: Partial<Movie>;
+    date: string;
+    time: string;
+    seats: string[];
+    totalPrice: number;
+    status: 'CONFIRMED' | 'CANCELLED';
+    createdAt: string;
 }
 
 export interface Product {
@@ -32,8 +66,8 @@ export interface Product {
     name: string;
     price: number;
     imageUrl: string;
-    category: 'SNACK' | 'GOODS';
-    description?: string;
+    category: 'SNACK' | 'DRINK' | 'COMBO';
+    description: string;
 }
 
 export interface CartItem extends Product {

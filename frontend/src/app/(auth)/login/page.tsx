@@ -1,10 +1,22 @@
 "use client";
 
+import { useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { MessageCircle, Mail, Lock } from 'lucide-react';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export default function LoginPage() {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+    const BACKEND_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+
+    const { isAuthenticated } = useAuthStore();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            router.push('/');
+        }
+    }, [isAuthenticated, router]);
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-[url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center relative">
@@ -60,7 +72,7 @@ export default function LoginPage() {
                 <div className="space-y-3">
                     {/* Kakao Login */}
                     <a
-                        href={`${API_URL}/oauth2/authorization/kakao`}
+                        href={`${BACKEND_URL}/oauth2/authorization/kakao`}
                         className="flex items-center justify-center gap-3 w-full py-3 rounded-lg bg-[#FEE500] text-[#000000] font-bold hover:bg-[#FEE500]/90 transition-colors text-sm"
                     >
                         <MessageCircle className="w-5 h-5 fill-current" />
@@ -69,7 +81,7 @@ export default function LoginPage() {
 
                     {/* Naver Login */}
                     <a
-                        href={`${API_URL}/oauth2/authorization/naver`}
+                        href={`${BACKEND_URL}/oauth2/authorization/naver`}
                         className="flex items-center justify-center gap-3 w-full py-3 rounded-lg bg-[#03C75A] text-white font-bold hover:bg-[#03C75A]/90 transition-colors text-sm"
                     >
                         <span className="w-5 h-5 flex items-center justify-center font-black text-sm">N</span>
@@ -78,7 +90,7 @@ export default function LoginPage() {
 
                     {/* Google Login */}
                     <a
-                        href={`${API_URL}/oauth2/authorization/google`}
+                        href={`${BACKEND_URL}/oauth2/authorization/google`}
                         className="flex items-center justify-center gap-3 w-full py-3 rounded-lg bg-white text-black font-bold hover:bg-gray-100 transition-colors text-sm"
                     >
                         {/* Simple Google G Icon */}
